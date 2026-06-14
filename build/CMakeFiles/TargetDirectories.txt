@@ -1,0 +1,2 @@
+/home/herbstcynthia/Desktop/Computer Vision Assignment/Computer-Vision-Assignment/build/CMakeFiles/edit_cache.dir
+/home/herbstcynthia/Desktop/Computer Vision Assignment/Computer-Vision-Assignment/build/CMakeFiles/rebuild_cache.dir
