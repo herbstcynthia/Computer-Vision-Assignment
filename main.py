@@ -3,20 +3,17 @@ import numpy as np
 import copy
 import os
 
-import open3d as o3d
-import numpy as np
 
 # Loading 3 point clouds
 
 def load_point_clouds(voxel_size=0.0):
     pcds = []
     for i in range(1, 4):
-        pcd = o3d.io.read_point_cloud("/home/herbstcynthia/Desktop/Computer Vision Assignment/Computer-Vision-Assignment/image%d.ply" %
+        pcd = o3d.io.read_point_cloud("path_to_images%d.ply" %
                                       i)
         pcd_down = pcd.voxel_down_sample(voxel_size=voxel_size)
         pcds.append(pcd_down)
     return pcds
-
 
 
 voxel_size = 0.05  # Adjust this value based on the scale of point clouds
@@ -36,14 +33,20 @@ def pairwise_registration(source, target):
     icp_coarse = o3d.pipelines.registration.registration_icp(
         source, target, max_correspondence_distance_coarse, np.identity(4),
         o3d.pipelines.registration.TransformationEstimationPointToPlane())
+    print("Transformation is: ")
+    print(icp_coarse.transformation)
     icp_fine = o3d.pipelines.registration.registration_icp(
         source, target, max_correspondence_distance_fine,
         icp_coarse.transformation,
         o3d.pipelines.registration.TransformationEstimationPointToPlane())
+    print("Transformation is: ")
+    print(icp_fine.transformation)
     transformation_icp = icp_fine.transformation
     information_icp = o3d.pipelines.registration.get_information_matrix_from_point_clouds(
         source, target, max_correspondence_distance_fine,
         icp_fine.transformation)
+    print("Transformation is: ")
+    print(information_icp)
     return transformation_icp, information_icp
 
 
